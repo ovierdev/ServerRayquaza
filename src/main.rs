@@ -24,11 +24,17 @@ async fn process(mut socket: TcpStream) {
 
     println!("[Info] Request: {}", first_line);
 
-    let file_path = match first_line {
-        line if line.starts_with("GET / ") => "static/index.html",
-        line if line.starts_with("GET /about ") => "static/about.html",
-        line if line.starts_with("GET /projects ") => "static/projects.html",
-        line if line.starts_with("GET /style.css ") => "static/style.css",
+    let route = first_line.split_whitespace().nth(1).unwrap_or("/");
+
+    println!("Path request: {}", route);
+
+    let file_path = match route {
+        "/" => "static/index.html",
+        "/about" => "static/about.html",
+        "/projects" => "static/projects.html",
+        "/contact" => "static/contact.html",
+        "/blog" => "static/blog.html",
+        "/style.css" => "static/style.css",
         _ => "static/404.html",
     };
 
