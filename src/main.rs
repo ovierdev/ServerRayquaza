@@ -21,10 +21,30 @@ async fn process(mut socket: TcpStream) {
 
     let request = String::from_utf8_lossy(&buffer);
     let first_line = request.lines().next().unwrap_or("");
-
+    let mut parts = first_line.split_whitespace();
+    let method = parts.next().unwrap_or("/");
     let route = first_line.split_whitespace().nth(1).unwrap_or("/");
 
-    println!("Path request: {}", route);
+    println!("[Info] Path request: {}", route);
+    println!("[Info] Method: {}", method);
+
+    if method == "POST" && route == "/contact" {
+        let body = request.split("\r\n\r\n").nth(1).unwrap_or("");
+        println!("[Info] Body raw: {}", body);
+
+        let html = render_thank_you_page(body);
+
+        let response = format!(
+            "HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: {}\r\n\r\n{}",
+            html.len(),
+            html
+        );
+        let _ = socket
+            .write_all(response.as_bytes())
+            .await;
+
+        return;
+    }
 
     let file_path = if route.starts_with("/images/") {
         format!("static{}", route)
@@ -69,15 +89,13 @@ async fn process(mut socket: TcpStream) {
         content.len(),
     );
 
-    socket
+    let _ = socket
         .write_all(response.as_bytes())
-        .await
-        .expect("Error writing response");
+        .await;
 
-    socket
+    let _ = socket
         .write_all(&content)
-        .await
-        .expect("Error writing content");
+        .await;
 }
 
 fn get_content_type(file_path: &str) -> &str {
@@ -94,4 +112,62 @@ fn get_content_type(file_path: &str) -> &str {
     } else {
         "application/octet-stream"
     }
+}
+
+fn render_thank_you_page(body: &str) -> String {
+    let mut name = "";
+    let mut message = "";
+
+    for pair in body.split('&') {
+        let mut parts = pair.split('=');
+
+        let key = parts.next().unwrap_or("");
+        let value = parts.next().unwrap_or("");
+
+        if key == "name" {
+            name = value;
+        }
+        if key == "message" {
+            message = value;
+        }
+    }
+
+    let name = decode_form_value(name);
+    let message = decode_form_value(message);
+
+    format!(
+        r#"
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <title> Message sent | Ovier </title>
+    <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/about">About Me </a>
+        <a href="/projects"> Projects </a>
+        <a href="/contact">Contact </a>
+        <a href="/blog>Blog </a>
+    </nav>
+
+    <main>
+        <section class="card">
+            <h1>Thanks, <span class="accent">{}</span></h1>
+            <p> Your message was recived:</p>
+            <p><strong>{}</strong></p>
+            <a href="/contact">Send another message</a>
+        </section>
+    </main>
+</body>
+</html>
+"#,
+        name, message
+    )
+}
+
+fn decode_form_value(value: &str) -> String {
+    value.replace('+', " ")
 }

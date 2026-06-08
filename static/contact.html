@@ -13,34 +13,17 @@
             <a href="/contact">Contact</a>
             <a href="/blog">Blog</a>
         </nav>
-        <main class="hero">
+        <main>
             <section class="card">
-                <p class="label">Projects</p>
-                <h1>My Laboratory in Rust</h1>
-                <div class="project-list">
-                    <article>
-                        <h2>TicketKitchen</h2>
-                        <p>
-                            Gestor de tickets inspirado en una cocina de
-                            restaurante.
-                        </p>
-                    </article>
+                <h1>Contact <span class="accent">me</span></h1>
+                <form action="/contact" method="POST">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required />
 
-                    <article>
-                        <h2>Miltank</h2>
-                        <p>
-                            Análisis de confiabilidad estilo Minitab usando
-                            Python.
-                        </p>
-                    </article>
-
-                    <article>
-                        <h2>Audio Detector</h2>
-                        <p>
-                            Detector de audio en Rust pensado para Raspberry Pi.
-                        </p>
-                    </article>
-                </div>
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" required></textarea>
+                    <button type="submit">Send</button>
+                </form>
             </section>
         </main>
     </body>

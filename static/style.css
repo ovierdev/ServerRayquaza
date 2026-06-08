@@ -109,3 +109,51 @@ p {
 .label {
     text-align: center;
 }
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+form label {
+    font-weight: bold;
+    color: #e5e7eb;
+}
+
+form input,
+form textarea {
+    padding: 12px 16px;
+    border: 1px solid #374151;
+    border-radius: 12px;
+    background: #111827;
+    color: #f9fafb;
+    font-size: 16px;
+    outline: none;
+}
+
+form input:focus,
+form textarea:focus {
+    border-color: #38bdf8;
+}
+
+form textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+form button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    background: #38bdf8;
+    color: #111827;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+form button:hover {
+    background: #0ea5e9;
+}
