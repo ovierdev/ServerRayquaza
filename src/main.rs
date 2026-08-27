@@ -28,6 +28,9 @@ async fn process(mut socket: TcpStream) {
 
     let file_path = if route.starts_with("/images/") {
         format!("static{}", route)
+    } else if route.starts_with("/downloads/noivern/") {
+        let filename = route.strip_prefix("/downloads/noivern/").unwrap_or("");
+        format!("releases/noivern/{}", filename)
     } else {
         match route {
             "/" => "static/index.html",
