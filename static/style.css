@@ -358,7 +358,7 @@ h1 {
     padding-top: 160px;
     padding-bottom: 100px;
 }
-
+class="tag"
 .page-header {
     max-width: 760px;
     margin-bottom: 70px;
@@ -533,6 +533,126 @@ h1 {
 
     .button {
         text-align: center;
+    }
+
+}
+
+/* --------------------------------------------------
+   Project detail
+-------------------------------------------------- */
+
+.project-detail {
+    padding-top: 160px;
+    padding-bottom: 100px;
+}
+
+.project-detail-grid {
+    display: grid;
+
+    grid-template-columns: 1.5fr 0.7fr;
+
+    gap: 70px;
+
+    margin-top: 70px;
+}
+
+.project-detail-grid h2 {
+    margin-top: 0;
+
+    color: #f9fafb;
+
+    font-size: 1.8rem;
+}
+
+.project-detail-grid p {
+    color: #9ca3af;
+
+    line-height: 1.8;
+}
+
+.project-meta {
+    padding: 28px;
+
+    background: #1f2937;
+
+    border: 1px solid #374151;
+    border-radius: 18px;
+}
+
+.project-meta div {
+    padding: 16px 0;
+
+    border-bottom: 1px solid #374151;
+}
+
+.project-meta div:last-child {
+    border-bottom: none;
+}
+
+.meta-label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #6b7280;
+
+    font-size: 0.8rem;
+    text-transform: uppercase;
+
+    letter-spacing: 0.08rem;
+}
+
+.project-meta strong {
+    color: #f9fafb;
+}
+
+.project-meta a {
+    color: #38bdf8;
+
+    text-decoration: none;
+}
+
+.download-section {
+    margin-top: 100px;
+
+    padding-top: 60px;
+
+    border-top: 1px solid #1f2937;
+}
+
+.download-section h2 {
+    margin: 10px 0;
+
+    color: #f9fafb;
+
+    font-size: 2rem;
+}
+
+.download-section p {
+    color: #9ca3af;
+}
+
+.download-placeholder {
+    display: inline-block;
+
+    margin-top: 20px;
+    padding: 12px 18px;
+
+    background: #1f2937;
+
+    border: 1px solid #374151;
+    border-radius: 10px;
+
+    color: #9ca3af;
+
+    font-weight: 600;
+}
+
+
+@media (max-width: 800px) {
+
+    .project-detail-grid {
+        grid-template-columns: 1fr;
     }
 
 }

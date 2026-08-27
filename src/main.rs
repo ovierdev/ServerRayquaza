@@ -33,6 +33,7 @@ async fn process(mut socket: TcpStream) {
             "/" => "static/index.html",
             "/about" => "static/about.html",
             "/projects" => "static/projects.html",
+            "/projects/noivern" => "static/noivern.html",
             "/contact" => "static/contact.html",
             "/blog" => "static/blog.html",
             "/style.css" => "static/style.css",
