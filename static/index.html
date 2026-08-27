@@ -1,39 +1,62 @@
  <!DOCTYPE html>
- <html lang ="es">
+ <html lang ="en">
  <head>
      <meta charset="UTF-8">
-     <title> Ovier | Presentation </title>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title> Ovier | Software & Engineering</title>
      <link rel="stylesheet" href="/style.css">
  </head>
  <body>
-     <nav class="navbar">
-         <a href="/">Home</a>
-         <a href="/about">About me</a>
-         <a href="/projects">Projects</a>
-         <a href="/contact">Contact</a>
-         <a href="/blog">Blog</a>
-     </nav>
+     <header class="site-header">
+         <nav class="navbar">
+             <a class="logo" href="/">OVIER.</a>
+             <div class="nav-links">
+                 <a href="/">Home</a>
+                 <a href="/about">About me</a>
+                 <a href="/projects">Projects</a>
+                 <a href="/blog">Blog</a>
+                 <a href="/contact">Contact</a>
+             </div>     
+         </nav>
+     </header>
 
-     <main>
-         <section class="card">
-             <h1> Hola, I'm <span class="accent">Ovier</span></h1>
-             <p>
-                 I work in Semiconductors area and I'm learning Rust,
-                 Linux, backend and systems. This page have server Rust Tokio.
-             </p>
+     <main class="container">
+         <section class="hero">
+             <div class="hero-content">
+                 <p class="eyebrow">SOFTWARE · EMBEDDED · ENGINEERING</p>
+                 <h1>Hi, I'm <span class="accent">Ovier</span></h1>
 
-             <div class="tags">
-                 <span class="tag">Rust</span>
-                 <span class="tag">Tokio</sapn>
-                 <span class="tag">Linux</span>
-                 <span class="tag>Semiconductors</span>
-                 <span class="tag">Backend</span>
+                 <p class="hero-description">
+                     I work in the semiconductor indrustry and build 
+                     software, backend services, embedded systems, 
+                     and Raspberry Pi projects in my free time.
+                 </p>
+                 <p class="server-note">
+                    This website is served by a Rust application runnung on my Raspberry Pi. 
+                 </p>
+
+                 <div class="tags">
+                     <span class="tag">Rust</span>
+                     <span class="tag">Tokio</span>
+                     <span class="tag">Linux</span>
+                     <span class="tag">Semiconductors</span>
+                     <span class="tag">Backend</span>
+                 </div>
+                 <div class="hero-actions">
+                     <a class="button primary" href="/projects">View Projects</a>
+                     <a class="button secundary" href="https://github.com/ovierdev" target="_blank" rel="noopener noreferrer">GitHub</a>                    
+                 </div>
+             </div>
+
+             <div class="hero-profile"> 
+                 <img class="profile-img" src="/images/img1-ovi.png" alt="Portrait of Ovier" > 
+                 <p class="profile-title"> PhD · Semiconductor Devices </p> 
+                 <p class="profile-stack"> Rust · Linux · Raspberry Pi </p> 
              </div>
          </section>
-         <section class="card">
-             <img class="profile-img" src="/images/img1-ovi.png" alt="Foto de perfil de Ovier">
-             <p class="label">PhD Semiconductor Devices</p>
-         </section>
      </main>
+     <footer class="footer"> 
+         <p> Built with Rust · Served from Raspberry Pi </p> 
+     </footer>
  </body>
  </html>

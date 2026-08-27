@@ -1,47 +1,109 @@
-<!doctype html>
-<html lang="es">
+<!DOCTYPE html>
+<html lang="en">
     <head>
-        <meta charset="UTF-8" />
-        <title>Projects | Ovier</title>
-        <link rel="stylesheet" href="/style.css" />
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Projects | Ovier </title>
+        <link href="style.css" rel="stylesheet">
     </head>
     <body>
-        <nav class="navbar">
-            <a href="/">Home</a>
-            <a href="/about">About me</a>
-            <a href="/projects">Projects</a>
-            <a href="/contact">Contact</a>
-            <a href="/blog">Blog</a>
-        </nav>
-        <main class="hero">
-            <section class="card">
-                <p class="label">Projects</p>
-                <h1>My Laboratory in Rust</h1>
-                <div class="project-list">
-                    <article>
-                        <h2>TicketKitchen</h2>
-                        <p>
-                            Gestor de tickets inspirado en una cocina de
-                            restaurante.
-                        </p>
-                    </article>
-
-                    <article>
-                        <h2>Miltank</h2>
-                        <p>
-                            Análisis de confiabilidad estilo Minitab usando
-                            Python.
-                        </p>
-                    </article>
-
-                    <article>
-                        <h2>Audio Detector</h2>
-                        <p>
-                            Detector de audio en Rust pensado para Raspberry Pi.
-                        </p>
-                    </article>
+        <header class="site-header">
+            <nav class="navbar">
+                <a class="logo" href="/">OVIER.</a>
+                <div class="nav-links">
+                    <a href="/">Home</a>
+                    <a href="/about">About me</a>
+                    <a href="/projects">Projects</a>
+                    <a href="/blog">Blog</a>
+                    <a href="/contact">Contact</a>
                 </div>
+            </nav>
+        </header>
+        <main class="container projects-page">
+            <section class="page-header">
+                <p class="eyebrow">SELECTED WORK</p>
+                <h1 class="page-title">PROJECTS</h1>
+                <p class="page-description">A selection of Software, systems and engineering projects I build to learn how things work.</p>
+            </section>
+            <section class="project-gird">
+                <article class="project-card">
+                    <span class="project-number">01</span>
+                    <div>
+                        <h2>Noiverm</h2>
+                        <p>Audio detection system written in Rust and designed to run on Raspberry Pi.</p>
+                        <div class="tags">
+                            <span class="tag">Rust</span>
+                            <span class="tag">Raspberry Pi</span>
+                            <span class="tag">Audio</span>
+                            <span class="tag">Linux</span>
+                        </div>
+                        <div class="project-actions">
+                            <a class="project-link" href="#">View -></a>
+                            <a class="project-link"
+                               href="https://github.com/ovierdev/Noivern"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                        >
+                            GitHub ↗
+                        </a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="project-card">
+                    <span class="project-number">02</span>
+
+                    <div class="project-content">
+                        <h2>ServerRayquaza</h2>
+                        <p>A personal HTTP server written in Rust.
+                        The first version handles TCP connections
+                        and HTTP responses directly using Tokio.
+                        </p>
+                        <div class="tags">
+                            <span class="tag">Rust</span>
+                            <span class="tag">Tokio</span>
+                            <span class="tag">HTTP</span>
+                            <span class="tag">Networking</span>
+                        </div>
+
+                        <div class="project-actions">
+                            <a class="project-link" href="#">View project →</a>
+                            <a
+                            class="project-link"
+                            href="https://github.com/ovierdev/ServerRayquaza"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >
+                            GitHub ↗
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="project-card">
+                    <span class="project-number">03</span>
+                    <div class="project-content">
+                        <h2>RelForge</h2>
+                        <p>
+                        Reliability engineering tools for
+                        statistical analysis and distributions
+                        such as Weibull and lognormal.
+                        </p>
+                        <div class="tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Reliability</span>
+                            <span class="tag">Statistics</span>
+                        </div>
+                        <div class="project-actions">
+                            <a class="project-link" href="#">View project -></a>
+
+                        </div>
+                    </div>
+                </article>
             </section>
         </main>
+        <footer class="footer">
+            <p>Built with Rust · Served from Raspberry Pi</p>
+        </footer>
     </body>
 </html>
