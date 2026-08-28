@@ -53,18 +53,9 @@ async fn process(mut socket: TcpStream) {
 
     let content_type = get_content_type(&file_path);
 
-    let is_binary = content_type.starts_with("image/");
-
-    let content: Vec<u8> = if is_binary {
-        tokio::fs::read(&file_path)
-            .await
-            .unwrap_or_else(|_| b"<h1>404 - File not found</h1>".to_vec())
-    } else {
-        tokio::fs::read_to_string(&file_path)
-            .await
-            .unwrap_or_else(|_| "<h1>404 - File not found</h1>".to_string())
-            .into_bytes()
-    };
+    let content: Vec<u8> = tokio::fs::read(&file_path)
+    .await
+    .unwrap_or_else(|_| b"<h1>404 - File not found</h1>".to_vec());
 
     let response = format!(
         "{}\r\nContent-Type: {}\r\nContent-Length: {}\r\n\r\n",
