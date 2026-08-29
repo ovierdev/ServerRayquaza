@@ -1,92 +1,69 @@
-use tokio::io::{AsyncReadExt, AsyncWriteExt};
-use tokio::net::{TcpListener, TcpStream};
+use axum::{
+    Router,
+    http::StatusCode,
+    response::Html,
+    routing::get,
+};
+
+use tower_http::services::ServeDir;
 
 #[tokio::main]
 async fn main() {
-    let listener = TcpListener::bind("0.0.0.0:8080").await.unwrap();
+    let app = Router::new()
+        .route("/", get(home))
+        .route("/about", get(about))
+        .route("/projects", get(projects))
+        .route("/projects/noivern", get(noivern))
+        .route("/blog", get(blog))
+        .route("/contact", get(contact))
+        .nest_service(
+            "/downloads/noivern",
+            ServeDir::new("releases/noivern"),
+        )
+        .fallback_service(ServeDir::new("static"));
 
-    println!("Server run in http://0.0.0.0:8080");
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:8080")
+        .await
+        .unwrap();
 
-    loop {
-        let (socket, _) = listener.accept().await.unwrap();
-        tokio::spawn(async move {
-            process(socket).await;
-        });
-    }
+    println!("Server running on http://0.0.0.0:8080");
+
+    axum::serve(listener, app)
+        .await
+        .unwrap();
 }
-async fn process(mut socket: TcpStream) {
-    let mut buffer = [0; 1024];
 
-    socket.read(&mut buffer).await.expect("Error read request");
+async fn home() -> Result<Html<String>, StatusCode> {
+    serve_html("static/index.html").await
+}
 
-    let request = String::from_utf8_lossy(&buffer);
-    let first_line = request.lines().next().unwrap_or("");
+async fn about() -> Result<Html<String>, StatusCode> {
+    serve_html("static/about.html").await
+}
 
-    let route = first_line.split_whitespace().nth(1).unwrap_or("/");
+async fn projects() -> Result<Html<String>, StatusCode> {
+    serve_html("static/projects.html").await
+}
 
-    println!("Path request: {}", route);
+async fn noivern() -> Result<Html<String>, StatusCode> {
+    serve_html("static/noivern.html").await
+}
 
-    let file_path = if route.starts_with("/images/") {
-        format!("static{}", route)
-    } else if route.starts_with("/downloads/noivern/") {
-        let filename = route.strip_prefix("/downloads/noivern/").unwrap_or("");
-        format!("releases/noivern/{}", filename)
-    } else {
-        match route {
-            "/" => "static/index.html",
-            "/about" => "static/about.html",
-            "/projects" => "static/projects.html",
-            "/projects/noivern" => "static/noivern.html",
-            "/contact" => "static/contact.html",
-            "/blog" => "static/blog.html",
-            "/style.css" => "static/style.css",
-            _ => "static/404.html",
+async fn blog() -> Result<Html<String>, StatusCode> {
+    serve_html("static/blog.html").await
+}
+
+async fn contact() -> Result<Html<String>, StatusCode> {
+    serve_html("static/contact.html").await
+}
+
+async fn serve_html(path: &str) -> Result<Html<String>, StatusCode> {
+    match tokio::fs::read_to_string(path).await {
+        Ok(content) => Ok(Html(content)),
+
+        Err(error) => {
+            eprintln!("Could not read {path}: {error}");
+            Err(StatusCode::INTERNAL_SERVER_ERROR)
         }
-        .to_string()
-    };
-
-    let status_line = if file_path == "static/404.html" {
-        "HTTP/1.1 404 NOT FOUND"
-    } else {
-        "HTTP/1.1 200 OK"
-    };
-
-    let content_type = get_content_type(&file_path);
-
-    let content: Vec<u8> = tokio::fs::read(&file_path)
-    .await
-    .unwrap_or_else(|_| b"<h1>404 - File not found</h1>".to_vec());
-
-    let response = format!(
-        "{}\r\nContent-Type: {}\r\nContent-Length: {}\r\n\r\n",
-        status_line,
-        content_type,
-        content.len(),
-    );
-
-    socket
-        .write_all(response.as_bytes())
-        .await
-        .expect("Error writing response");
-
-    socket
-        .write_all(&content)
-        .await
-        .expect("Error writing content");
-}
-
-fn get_content_type(file_path: &str) -> &str {
-    if file_path.ends_with(".html") {
-        "text/html; charset=UTF-8"
-    } else if file_path.ends_with(".css") {
-        "text/css; charset=UTF-8"
-    } else if file_path.ends_with(".jpg") || file_path.ends_with(".jpeg") {
-        "image/jpeg"
-    } else if file_path.ends_with(".png") {
-        "image/png"
-    } else if file_path.ends_with(".svg") {
-        "image/svg+xml"
-    } else {
-        "application/octet-stream"
     }
 }
